@@ -2,9 +2,9 @@
 
 ### Overview
 
-The web is an ever growing medium by which it is getting more and more difficult
+The web is an ever growing medium and it is getting more and more difficult
 to filter useful information. In our journey to writing beautiful JavaScript we
-have come and will come across many great reference points that will guide our
+have come and will come across a great many reference points that will guide our
 learning. This is where personal feeds come in very useful. Online feeds are
 like to-do lists in that they can be infinitely personalized and there is not
 one solution that works for everybody.
@@ -17,7 +17,7 @@ information. The user from that point will be able to either dismiss the
 additional information or go to the referenced article.
 
 This will be our first single page app. All of our application views will be
-contained in the provided index.html file. Our task, after we pull from the
+contained in the provided [index.html](index.html) file. Our task, after we pull from the
 respective feed APIs, will be to toggle the appropriate classes and content for
 the provided site architecture.
 
@@ -29,12 +29,31 @@ the provided site architecture.
 
 __Feed sources:__
 
-Give the user the ability to pull from a minimum of three news sources. You can
-select the three provided news sources and/or add your own:
+Give the user the ability to pull from a multiple news sources. Here are two news sources we suggest:
 
-- [Mashable: http://mashable.com/stories.json](http://mashable.com/stories.json)
-- [Reddit: https://www.reddit.com/top.json](https://www.reddit.com/top.json)
-- [Digg: http://digg.com/api/news/popular.json](http://digg.com/api/news/popular.json)
+- [NPR One](http://dev.npr.org/)
+- [Hearst publishing group](http://developer.hearst.com/) (Cosmopolitan, Elle, Popular Mechanics, Road and Track, etc.)
+
+You should also feel free to use other news APIs; however, you will find that many APIs that do not support either [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) or [JSONp](https://en.wikipedia.org/wiki/JSONP) will result in a cross-domain restriction error ("No 'Access-Control-Allow-Origin' header is present...") in the browser. To get around this, you can use the following proxy server to filter your API requests.
+
+Let's say you wanted to use the Digg API, which has the following endpoint:
+
+`http://digg.com/api/news/popular.json`
+
+If you preface the request with the proxy server API as follows...
+
+`https://accesscontrolalloworiginall.herokuapp.com/http://digg.com/api/news/popular.json`
+
+...you should be able to use the Digg API without encountering a cross-domain restriction error. Here's a code example of how you might use the proxy server:
+
+```js
+$.get("https://accesscontrolalloworiginall.herokuapp.com/http://digg.com/api/news/popular.json", function(results){
+  console.log(results);
+  results.data.feed.forEach(function(result){
+    $("ul").append("<li>"+result.content.title+"</li>")
+  })
+})
+```
 
 If you use your own feeds, they must have APIs with the following minimum
 requirements:
@@ -68,7 +87,7 @@ __Feed rules:__
 - Add an error message (either alert or a notification on the page) if the app
   cannot load from the selected feed.
 
-__Additoinal UI interaction rules:__
+__Additional UI interaction rules:__
 
 - When the user clicks/taps the search icon, expand the input box. Best approach
   for this is to toggle the `.active` class for the `#search` container. If the
@@ -99,19 +118,19 @@ __Additoinal UI interaction rules:__
 
 ### Necessary Deliverables
 
-- A __working feedr, built by you__, that can be run locally
-- A __git repository hosted on Github__, with the code necessary to run your
-  project
-- Most of the students' work will be done on the __app.js__ file. You may update
+* A __working Feedr, built by you__, that can be run locally
+* A __new git repository hosted on Github__, where your codebase is maintained.
+  - Most of the your will be done on the __app.js__ file. You may update
   the index.html and style.css files if you would like to further customize your
   app.
+* A 5-10 minute **presentation** including 3 technical hurdles, 2 new things you learned, Q&A.
 
 ---
 
 ### Getting Started
 
-Begin by "fork"ing this repository. You can do so by clicking the "Fork" icon on
-the top right of [this](https://github.com/GA-JS-Pilot/feedr) page. Once
+Begin by "forking" the starter code repository. You can do so by clicking the "Fork" icon on
+the top right of [this](https://github.com/generalassembly-studio/JS-Unit-2-Project-Starter-Code) page. Once
 complete, clone the repository to your computer by running the following
 commands:
 
