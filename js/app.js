@@ -33,7 +33,6 @@ $(function () {
 
   $('#search a').on('click', function(){
     if($(this).parent('#search').hasClass('active')){
-      console.log('test');
       $(this).parent('#search').removeClass('active');
     } else {
       $(this).parent('#search').addClass('active');
