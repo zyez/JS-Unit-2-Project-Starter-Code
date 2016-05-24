@@ -1,5 +1,5 @@
 /*
-  Please add all Javascript code to this file.
+  Feedr app that
 */
 
 
@@ -185,23 +185,3 @@ function runNyt(){
       throw err;
     });
 };
-
-
-
-// Set the 3 different sources
-// Set the featuredImg src to the interacted image.
-// Set the test article link to the iterated article title
-// Set the tag or category to the Lifestyle placeholder
-// Set the 526 to something...
-
-//Show loading popup between then choosing a source and success
-
-// When user clicks on title, show popup overlay and remove .loader
-// In popup overlay, change "read more from source" link to article
-// Clicks the search box, expand it, by toggling .active
-// Hide the pop-up when the usr hits X
-// Click "Feedr" logo will default to main feed. (or bonus is one large feed)
-
-//BONUS:
-// Infinite scrolling, 20 at a time
-// handlebar template
