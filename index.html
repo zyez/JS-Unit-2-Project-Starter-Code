@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="styles/style.css" media="screen" charset="utf-8">
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script src="js/handlebars-v4.0.5.js"></script>
 
     </head>
 
@@ -23,8 +24,8 @@
             <a href="#"><h1>Feedr</h1></a>
             <nav>
               <ul>
-                <li><a href="#">News Source: <span>Source Name</span></a>
-                  <ul>
+                <li id="currentSource"><a href="#">News Source: <span>Source Name</span></a>
+                  <ul id="source-picker">
                       <li><a href="#">Source 1</a></li>
                       <li><a href="#">Source 2</a></li>
                       <li><a href="#">Source 3</a></li>
@@ -39,70 +40,37 @@
             <div class="clearfix"></div>
           </section>
         </header>
-        <div id="popUp" class="loader hidden">
-          <a href="#" class="closePopUp">X</a>
-          <div class="container">
-            <h1>Article title here</h1>
-            <p>
-              Article description/content here.
-            </p>
-            <a href="#" class="popUpAction" target="_blank">Read more from source</a>
-          </div>
-        </div>
-        <section id="main" class="container">
-          <article class="article">
-            <section class="featuredImage">
-              <img src="images/article_placeholder_1.jpg" alt="" />
-            </section>
-            <section class="articleContent">
-                <a href="#"><h3>Test article title</h3></a>
-                <h6>Lifestyle</h6>
-            </section>
-            <section class="impressions">
-              526
-            </section>
-            <div class="clearfix"></div>
-          </article>
-          <article class="article">
-            <section class="featuredImage">
-              <img src="images/article_placeholder_2.jpg" alt="" />
-            </section>
-            <section class="articleContent">
-                <a href="#"><h3>Test article title</h3></a>
-                <h6>Lifestyle</h6>
-            </section>
-            <section class="impressions">
-              526
-            </section>
-            <div class="clearfix"></div>
-          </article>
-          <article class="article">
-            <section class="featuredImage">
-              <img src="images/article_placeholder_2.jpg" alt="" />
-            </section>
-            <section class="articleContent">
-                <a href="#"><h3>Test article title</h3></a>
-                <h6>Lifestyle</h6>
-            </section>
-            <section class="impressions">
-              526
-            </section>
-            <div class="clearfix"></div>
-          </article>
-          <article class="article">
-            <section class="featuredImage">
-              <img src="images/article_placeholder_1.jpg" alt="" />
-            </section>
-            <section class="articleContent">
-                <a href="#"><h3>Test article title</h3></a>
-                <h6>Lifestyle</h6>
-            </section>
-            <section class="impressions">
-              526
-            </section>
-            <div class="clearfix"></div>
-          </article>
+        <section id="results">
         </section>
+
+        <script id="articleTemplate" type="text/x-handlebars-template">
+          <div>
+            <div id="popUp" class="loader hidden">
+              <a href="#" class="closePopUp">X</a>
+              <div class="container">
+                <h1>{{articleTitle}}</h1>
+                <p>
+                  {{articleDesc}}
+                </p>
+                <a href="{{articleURL}}" class="popUpAction" target="_blank">Read more from source</a>
+              </div>
+            </div>
+            <section id="main" class="container">
+              <article class="article">
+                <section class="featuredImage">
+                  <img src="{{articleImg}}" alt="" />
+                </section>
+                <section class="articleContent">
+                    <a href="#"><h3>{{articleTitle}}</h3></a>
+                    <h6>{{tag}}</h6>
+                </section>
+                <section class="impressions">
+                  {{impressions}}
+                </section>
+                <div class="clearfix"></div>
+              </article>
+          </div>
+        </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
