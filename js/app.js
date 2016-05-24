@@ -20,6 +20,13 @@ $(function () {
   //runMarvel as the home screen listing
   runMarvel();
 
+  //Run Marvel feed when clicking on Feedr logo
+  $('#logo').on('click', function(){
+    $('#results').html('');
+    runMarvel();
+    $currentSource.html('Marvel Comics')
+  });
+
   //run feed for particular news source
   var $sourcePicker = $('#source-picker');
   changeFeed($currentSource);
@@ -104,7 +111,7 @@ function loadTemplate(article){
 
 function runMarvel(){
   var endptURL = 'http://gateway.marvel.com/v1/public/events?orderBy=startDate&apikey=';
-  var apiKey = 'YOUR KEY HERE';
+  var apiKey = 'YOUR API KEY';
 
   $.ajax({
     url: endptURL + apiKey,
@@ -152,7 +159,7 @@ function runMarvel(){
 function runNyt(){
   var url = 'https://api.nytimes.com/svc/topstories/v2/home.json';
   url += '?' + $.param({
-    'api-key': 'YOUR KEY HERE'
+    'api-key': 'YOUR API KEY'
   });
 
   var response;
