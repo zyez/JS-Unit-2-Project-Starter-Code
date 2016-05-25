@@ -11,7 +11,7 @@ $(function () {
 
   //Set current source as Marvel API
   var $currentSource = $('#currentSource a span');
-  var $source = $currentSource.html('Marvel Comics');
+  var $source = $currentSource.html('Marvel Events');
 
 
   //Set the 3 sources and their names
@@ -24,7 +24,7 @@ $(function () {
   $('#logo').on('click', function(){
     $('#results').html('');
     runMarvel();
-    $currentSource.html('Marvel Comics')
+    $currentSource.html('Marvel Events')
   });
 
   //run feed for particular news source
@@ -41,23 +41,23 @@ $(function () {
 });
 
 function setSources(){
-  $('#source-picker li:nth-child(1) a').html('Marvel Comics');
+  $('#source-picker li:nth-child(1) a').html('Marvel Events');
   $('#source-picker li:nth-child(2) a').html('New York Times');
-  $('#source-picker li:nth-child(3) a').html('Underdetermined');
+  $('#source-picker li:nth-child(3) a').html('Marvel Comics');
 };
 
 function changeFeed($current){
   $('#source-picker li').on('click', 'a', function() {
     $('#results').html('');
-    if($(this).html() === 'Marvel Comics'){
+    if($(this).html() === 'Marvel Events'){
       runMarvel();
-      $current.html('Marvel Comics')
+      $current.html('Marvel Events')
     } else if ($(this).html() === 'New York Times'){
       runNyt();
       $current.html('New York Times')
     } else {
-      runOther();
-      $current.html('Other')
+      runMarvelComics();
+      $current.html('Marvel Comics')
     }
   });
 };
@@ -191,3 +191,41 @@ function runNyt(){
       throw err;
     });
 };
+
+/*************************************************************
+******** Marvel Comics API | developer.marvel.com ************
+*************************************************************/
+
+
+function runMarvelComics(){
+  var endptURL = 'http://gateway.marvel.com:80/v1/public/comics?dateRange=2014-01-01%2C2019-01-01&orderBy=-onsaleDate&apikey=';
+  var apiKey = 'YOUR API KEY';
+
+  $.ajax({
+    url: endptURL + apiKey,
+    dataType: 'json',
+    success: function(response){
+      console.log(response);
+
+      //Iterate through each of the resulting objects to pull out the various elements
+      for(var i = 0; i < response.data.results.length; i++){
+          var comicTitle = response.data.results[i].title;
+          var comicDesc = response.data.results[i].description;
+          var comicURL = response.data.results[i].urls[0].url;
+          var comicImage = response.data.results[i].thumbnail.path + "." + response.data.results[i].thumbnail.extension;
+          var comicPrice = '$' + response.data.results[i].prices[0].price;
+          //Split the Date reposnse into two parts then only show the date and not the timestamp
+          var fullDate = response.data.results[i].dates[0].date.split('T');
+          var comicPublishDate = 'Release date is ' + fullDate[0];
+
+
+          var article = articleArray(comicTitle,comicDesc,comicURL,comicImage,comicPrice,comicPublishDate);
+          loadTemplate(article);
+      }
+      //After iterating through and setting up the template, add in the interactive functions.
+      popupFunctions();
+    }
+  });
+};
+
+//Infinite scrolling - adding in page offset value each time it loads.
